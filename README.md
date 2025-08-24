@@ -5,7 +5,7 @@ IBM® Software Hub adalah solusi yang dapat digunakan untuk menginstal, mengelol
 Langkah langkah berikut ini, untuk menginstall service service berikut
 1. IBM Knowledge Catalog
 2. IBM Manta Datalineage
-3. IBM Automated Datalineage
+3. MANTA Automated Datalineage
 4. IBM Datastage Enterprise
 
 # 1. Setup VM Workstation
@@ -79,7 +79,7 @@ touch cpd_env.sh && chmod +x cpd_env.sh
 nano cpd_env.sh
 ```
 ### 2.2. Isi file tersebut dengan informasi yang dibutuhkan
-contoh isi file, ganti <<value>> dengan nilai yang anda inginkan
+contoh isi file, ganti {{value}} dengan nilai yang anda inginkan
 ```bash
 #===============================================================================
 # IBM Software Hub installation variables
