@@ -70,8 +70,8 @@ oc version
 
 ## Untuk Instalasi Secara Offline
 1. masukkan file docker, harbor, openshift client, dan cpd-image yang sudah di archive ke VM private registry
-2. setup VM workstation sbg private registry
-3. ketika sudah private registry sudah ready, maka jalankan perintah berikut untuk login ke private registry
+2. setup VM private registry [guide](https://github.com/r00ri/openshift-private-registry)
+3. ketika private registry sudah ready, maka jalankan perintah berikut untuk login ke private registry
 
 ```bash
 cpd-cli manage login-private-registry ${PRIVATE_REGISTRY_LOCATION} ${PRIVATE_REGISTRY_PUSH_USER} ${PRIVATE_REGISTRY_PUSH_PASSWORD}
