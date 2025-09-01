@@ -68,6 +68,38 @@ export KUBECONFIG=/mnt/cpd/kubeconfig
 oc version
 ```
 
+## Untuk Instalasi Secara Offline
+1. masukkan file docker, harbor, openshift client, dan cpd-image yang sudah di archive ke VM private registry
+2. setup VM workstation sbg private registry
+3. ketika sudah private registry sudah ready, maka jalankan perintah berikut untuk login ke private registry
+
+```bash
+cpd-cli manage login-private-registry ${PRIVATE_REGISTRY_LOCATION} ${PRIVATE_REGISTRY_PUSH_USER} ${PRIVATE_REGISTRY_PUSH_PASSWORD}
+```
+
+4. push image ke private registry
+```bash
+cpd-cli manage mirror-images --components=${COMPONENTS} --release=${VERSION} --source_registry=127.0.0.1:12443 --target_registry=${PRIVATE_REGISTRY_LOCATION} --arch=${IMAGE_ARCH} --case_download=false
+```
+
+5. validasi push image
+
+```bash
+cpd-cli manage list-images --components=${COMPONENTS} --release=${VERSION} --target_registry=${PRIVATE_REGISTRY_LOCATION} --case_download=false
+```
+
+7. buat ICSP
+jalankan perintah oc get imageContentSourcePolicy, jika hasilnya *No resources found*, jalankan perintah dibawah
+
+```bash
+cpd-cli manage apply-icsp --registry=${PRIVATE_REGISTRY_LOCATION}
+```
+
+9. pull image
+```bash
+export OLM_UTILS_IMAGE=${PRIVATE_REGISTRY_LOCATION}/cpopen/cpd/olm-utils-v3:${VERSION}.amd64
+```
+
 # 2. Mengumpulkan Informasi Openshift Cluster
 
 ## Prasyarat
