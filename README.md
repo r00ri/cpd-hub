@@ -71,18 +71,23 @@ oc version
 ## Untuk Instalasi Secara Offline
 1. masukkan file docker, harbor, openshift client, dan cpd-image yang sudah di archive ke VM private registry
 2. setup VM private registry [guide](https://github.com/r00ri/openshift-private-registry)
-3. ketika private registry sudah ready, maka jalankan perintah berikut untuk login ke private registry
+3. load image olm-utils-v3
+```bash
+cpd-cli manage load-image --source-image=icr.io/cpopen/cpd/olm-utils-v3:5.2.1.amd64
+export OLM_UTILS_IMAGE=icr.io/cpopen/cpd/olm-utils-v3:5.2.1.amd64
+```
+4. ketika private registry sudah ready, maka jalankan perintah berikut untuk login ke private registry
 
 ```bash
 cpd-cli manage login-private-registry ${PRIVATE_REGISTRY_LOCATION} ${PRIVATE_REGISTRY_PUSH_USER} ${PRIVATE_REGISTRY_PUSH_PASSWORD}
 ```
 
-4. push image ke private registry
+5. push image ke private registry
 ```bash
 cpd-cli manage mirror-images --components=${COMPONENTS} --release=${VERSION} --source_registry=127.0.0.1:12443 --target_registry=${PRIVATE_REGISTRY_LOCATION} --arch=${IMAGE_ARCH} --case_download=false
 ```
 
-5. validasi push image
+6. validasi push image
 
 ```bash
 cpd-cli manage list-images --components=${COMPONENTS} --release=${VERSION} --target_registry=${PRIVATE_REGISTRY_LOCATION} --case_download=false
@@ -95,7 +100,7 @@ jalankan perintah oc get imageContentSourcePolicy, jika hasilnya *No resources f
 cpd-cli manage apply-icsp --registry=${PRIVATE_REGISTRY_LOCATION}
 ```
 
-9. pull image
+8. pull image
 ```bash
 export OLM_UTILS_IMAGE=${PRIVATE_REGISTRY_LOCATION}/cpopen/cpd/olm-utils-v3:${VERSION}.amd64
 ```
