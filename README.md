@@ -468,3 +468,34 @@ biarkan tetap menjadi default seperti itu
 oc create job -n ${PROJECT_CPD_INST_OPERANDS} --from=cronjob/catalog-api-lineage-sync-cronjob lineage-job
 ```
 
+### Install Kubernetes SMB
+```bash
+cat <<EOF | oc apply -f -
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  # "namespace" omitted. ClusterRoles are not scoped to a namespace.
+  name: ibm-zen-volumes-cluster-role
+rules:
+- apiGroups: [""]
+  #
+  # at the HTTP level, the name of the resource for accessing Secret
+  # objects is "secrets"
+  resources: ["persistentvolumes"]
+  verbs: ["create", "get", "list", "patch", "update", "watch", "delete", "use"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: ibm-zen-volumes-cluster-role-binding
+subjects:
+- kind: ServiceAccount
+  name: ibm-zen-operator-serviceaccount
+  namespace: ibm-common-services    # The namespace where the IBM Cloud Pak foundational services are installed
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: ibm-zen-volumes-cluster-role
+EOF
+```
