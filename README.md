@@ -36,7 +36,7 @@ mkdir -p /mnt/cpd && cd /mnt/cpd
 wget https://github.com/IBM/cpd-cli/releases/download/v14.2.0_refresh_1/cpd-cli-linux-EE-14.2.0.tgz
 tar -xvf cpd-cli-linux-EE-14.2.0.tgz
 export PATH=/mnt/cpd/cpd-cli-linux-EE-14.2.0-2124:$PATH
-export HOME=/mnt/cpd
+export CPD_CLI_MANAGE_WORKSPACE=/mnt/cpd
 cpd-cli manage restart-container
 ```
 **Untuk Melihat Container cpd-cli**
